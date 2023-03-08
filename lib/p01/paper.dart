@@ -40,7 +40,9 @@ class PaperPainter extends CustomPainter {
 
     // drawIsAntiAliasColor(canvas);
     // drawStyleStrokeWidth(canvas);
-    drawStrokeCap(canvas);
+    // drawStrokeCap(canvas);
+    // drawStrokeJoin(canvas);
+    drawStrokeMiterLimit(canvas);
   }
 
   @override
@@ -95,4 +97,59 @@ void drawStrokeCap(Canvas canvas) {
       paint..strokeCap = StrokeCap.round);
   canvas.drawLine(const Offset(50 + 50 * 2, 50), const Offset(50 + 50 * 2, 150),
       paint..strokeCap = StrokeCap.square);
+}
+
+void drawStrokeJoin(Canvas canvas) {
+  Paint paint = Paint();
+  Path path = Path();
+
+  paint
+    ..style = PaintingStyle.stroke
+    ..color = Colors.blue
+    ..strokeWidth = 20;
+
+  path.moveTo(50, 50);
+  path.lineTo(50, 150);
+  path.relativeLineTo(100, -50);
+  path.relativeLineTo(0, 100);
+  canvas.drawPath(path, paint..strokeJoin = StrokeJoin.bevel);
+
+  path.reset();
+  path.moveTo(50 + 150.0, 50);
+  path.lineTo(50 + 150.0, 150);
+  path.relativeLineTo(100, -50);
+  path.relativeLineTo(0, 100);
+  canvas.drawPath(path, paint..strokeJoin = StrokeJoin.miter);
+
+  path.reset();
+  path.moveTo(50 + 150.0 * 2, 50);
+  path.lineTo(50 + 150.0 * 2, 150);
+  path.relativeLineTo(100, -50);
+  path.relativeLineTo(0, 100);
+  canvas.drawPath(path, paint..strokeJoin = StrokeJoin.round);
+}
+
+void drawStrokeMiterLimit(Canvas canvas) {
+  Paint paint = Paint();
+  Path path = Path();
+  paint
+    ..style = PaintingStyle.stroke
+    ..color = Colors.blue
+    ..strokeJoin = StrokeJoin.miter
+    // ..blendMode = BlendMode.color
+    ..strokeWidth = 20;
+  for (int i = 0; i < 4; i++) {
+    path.reset();
+    path.moveTo(50 + 150.0 * i, 50);
+    path.lineTo(50 + 150.0 * i, 150);
+    path.relativeLineTo(100, -(40.0 * i + 20));
+    canvas.drawPath(path, paint..strokeMiterLimit = 2);
+  }
+  for (int i = 0; i < 4; i++) {
+    path.reset();
+    path.moveTo(50 + 150.0 * i, 50 + 150.0);
+    path.lineTo(50 + 150.0 * i, 150 + 150.0);
+    path.relativeLineTo(100, -(40.0 * i + 20));
+    canvas.drawPath(path, paint..strokeMiterLimit = 3);
+  }
 }
