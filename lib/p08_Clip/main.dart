@@ -4,7 +4,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_draw/p05/paper.dart';
+import 'package:flutter_draw/p08_Clip/paper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 确定初始化
